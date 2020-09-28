@@ -3,19 +3,22 @@
 
 ## Creating an Instance of ValueAndError:
 There's a couple of ways of creating an instance of a ValueAndError object:
-1. Standard Construct  `X = ValueAndError( Value , Error )`
+1. Standard Construct
+   `
+   X = ValueAndError( Value , Error )
+   `
    * Single Value - Single Error: 
   
         call
-        ```
+        ```MATLAB
         a = ValueAndError( 3.1415 , 0.0001)
         ```
-        For a measurement of `a` with value `3.1415` and error estimation of `0.001`.
+        For a measurement of `a` with value `3.1415` and error estimation of `0.0001`.
         
    * Multiple Values - Single Error:
 
         call
-        ```
+        ```MATLAB
         b = ValueAndError( [82 , 79 , 90 ] , 5)
         ```
         For 3 measurements of `b` with values given as a vector. The error estimation is the same. ValueAndError will apply the same error for all mesurements.
@@ -23,15 +26,29 @@ There's a couple of ways of creating an instance of a ValueAndError object:
     * Multiple Values - Multiple Errors:
 
         call
+        ```MATLAB
+        c = ValueAndError( [ 0.41 , 0.420 , 0.405 ] , [0.03 , 0.015 , 0.001 ] )
         ```
-        c = ValueAndError( [0.41 , 0.420 , 0.405 ] , [0.03 , 0.015 , 0.001])
-        ```
-        For 3 measurements of `c` with values given as a vector. Each measurement as a different associated error.
+        For 3 measurements of `c` with values are given as a vector. Each measurement as a different associated error.
 
 2. Value and Cumulative Error From a Function of values and erors ` X = ValueAndError.fromFunction( FunctionHandle_Or_SymbolicFunction , a1,...,aN )`
-   When your variable is a result of % Use the power of MATLAB to compute
-   * With Function Hnadle 
 
+
+   When your variable is a result of a calculation involving other values  which are also known only up to some error, its error is derived from the   other variables and the function. This method of creating an instance of  ValueAndError will automatically compute the value and the comulative error.
+
+   * With a Symbolic Function
+
+      search "MATLAB Create Symbolic Functions" for more information about symbolic functions.
+
+      Symbolic Functions are not the easiest way of using ValueAndError, but they hold against some of the problems that Function-Handles face. The most important is, that you can use variables and functions which are only known within the context of your script.
+
+      Example:
+      ```MATLAB
+
+
+      ```
+
+      
 
 3. By
 4. Default Constructor: 

@@ -12,7 +12,7 @@ classdef ValueAndError
 
     
     methods (Access = public)
-        %% c'tor:
+        %% standard c'tor:
         function obj = ValueAndError(Value,Error)
             %VALUEANDERROR Construct an instance of this class
             %   Insert a known Value and Error
@@ -190,7 +190,7 @@ classdef ValueAndError
                Function  
            end%arguments
            arguments (Repeating)
-               ValueAndErrorInputs ValueAndError {mustBeValueAndError}
+               ValueAndErrorInputs ValueAndError {mustBeValueAndErrorOrNumeric}
            end
            
            [SymbolicFunction , InputCellArray ] = assert_and_deduce_inputs(Function , ValueAndErrorInputs);
@@ -395,6 +395,28 @@ function symbolicFunction = function_handle_to_symbolic_function(FunctionHanlde)
      symbolicFunction = ValueAndError_Symbolic_Function_;
 end
 
+
+
+function mustBeValueAndErrorOrNumeric(A)
+%mustBeValueAndError Validate that value is of class ValueAndError or issue error
+%   mustBeValueAndError(A) issues an error if A contains objects not of class ValueAndError. 
+%   MATLAB calls mustBeValueAndError to determine if a value is member of ValueAndError.
+%
+%   See also: isnumeric
+        
+%   Copyright 2020 Nir Gutman
+
+     try
+         S = whos("A");
+         ClassString =  string(S.class);
+         
+         if ClassString ~= "ValueAndError" &&   ~( isnumeric( ClassString ) || isnumerictype( ClassString )  )
+             throw(createValidatorException('MATLAB:validators:mustBeValueAndError'));
+         end
+     catch
+         error("mustBeValueAndError failed to determine class  " +    ClassString );
+     end
+end
 
 function mustBeValueAndError(A)
 %mustBeValueAndError Validate that value is of class ValueAndError or issue error
