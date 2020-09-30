@@ -62,6 +62,17 @@ disp(E_5);
 disp(E_6);
 
 
+%% Using standart-deviation:
+% We've measured something N times. All measurements are of the same value, and not of a known changing process. 
+% Thus all measurements can be thought of as a random process who's mean is an estimatio of the real value, and the error
+% is the standart deviation:
+N = 100; % Numnrt of measurements:
+sigma = 3;
+mean  = 42;
+
+measurements = mean + sigma*randn(N,1);
+
+X = ValueAndError.fromstandardDeviationOfValues( measurements );
 
 
 
