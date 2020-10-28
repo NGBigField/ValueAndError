@@ -1,6 +1,13 @@
 # ValueAndError
  A MATLAB® Object to Manage and Auto-Calculate the Cumulative Scientific-Error of measurements and calculations.
 
+
+![ValueAndError_Picture](ValueAndError_Picture.png)
+
+For the all the ways you can benefit from this code, see the example code "ValueAndError_Example".
+
+ ---
+
 ## Creating an Instance of ValueAndError:
 There's a couple of ways of creating an instance of a ValueAndError object:
 1. Standard Construct
@@ -44,31 +51,10 @@ There's a couple of ways of creating an instance of a ValueAndError object:
 
       Example:
       ```MATLAB
-
-
+      E = ValueAndError.fromFunction( @(m,c) m*c^2 , m , c )
       ```
 
       
-
-3. By
-4. Default Constructor: 
-
-   Call 
-   ````
-   a =  ValueAndError(); 
-   ````
-   to get an object with empty fields `a.Value` and `a.Error`. Fill those up later in the code using direct assignments. e.g:
-   ```
-    a = ValueAndError();
-    a.Value = 3.1415;
-    a.Error = 0.0001;
-   ```
-
-
-
-
-
-
 
 
 
