@@ -72,7 +72,7 @@ disp(E_6);
 % Thus all measurements can be thought of as a random process who's mean is an estimatio of the real value, and the error
 % is the standart deviation:
 N = 100; % Numnrt of measurements:
-Sigma = 0.2;
+Sigma = 3;
 Mean  = 42;
 
 measurements = Mean + Sigma*randn(N,1);
@@ -83,13 +83,13 @@ disp(X)
 %% Working with ValueAndError:
 % arramge the values of X:
 sortedValues = sort( X.Value );
-xError       = mean(X.Error);
+xError       = mean(X.Error); % not very sceintifical, but helps to make a point
 % Create a sorted X object:
 x_sroted = ValueAndError(sortedValues , xError)
 
 % Take some members of X from the beggining and from rge end and append them together:
-x_last   = x_sroted(95:2:end)
-x_first  = x_sroted(1 :2:6 )
+x_last   = x_sroted(92 : 4 : end )
+x_first  = x_sroted( 1 : 4 : 8   )
 x_append = x_first.append(x_last)
 
 
@@ -99,16 +99,26 @@ Y = ValueAndError.fromFunction(   @(x,xMean,m,F)  ( (F^(3/2)) / sqrt(m) )*sind(x
 % note to use the same order of function inputs when calling ValueAndError.fromFunction()
 
 % compare to normal function  (no derived errors nvolved): 
-y = ( ( (MeanSigmaF.Value)^(3/2) ) / sqrt(m.Value) )*sind(x_append.Value - x_append.mean.Value );
+y   =  ( ( (MeanSigmaF.Value)^(3/2) ) / sqrt(m.Value) )*sind(x_append.Value - x_append.mean.Value );
 ComputationError = rms(Y.Value-y)
 
-%% plot results:
+xFit = linspace(30,55,1000);
+yFit = ( ( (MeanSigmaF.Value)^(3/2) ) / sqrt(m.Value) )*sind( xFit       - mean(xFit)   );
+
+% plot results:
 %errorbar(x,y,yneg,ypos,xneg,xpos)
 FigH = figure();
 ErrorH = errorbar(x_append.Value , Y.Value , Y.Error , Y.Error , x_append.Error , x_append.Error); 
 ErrorH.LineStyle = 'none';
+ErrorH.DisplayName = "Measurements";
+hold on
+plotH  = plot(xFit , yFit);
+plotH.LineStyle = ':';
+plotH.DisplayName ="Fit" ;
 xlabel("X [m]" , 'Interpreter','latex' , 'FontSize',16)
 ylabel("$$ Y =  \frac{ F^{ \frac{3}{2} } }{ \sqrt{m} } sin(X- \bar X)   $$" ,'Interpreter','latex' , 'FontSize',16)
-title("ValueAndError"+newline+"The best way to compute scientific errors");
+title("ValueAndError"+newline+"The best way to compute scientific errors"  , 'Interpreter','latex');
+LegH = legend();
+LegH.Location = 'best';
 grid on
 grid minor
