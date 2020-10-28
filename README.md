@@ -2,10 +2,16 @@
  A MATLAB® Object to Manage and Auto-Calculate the Cumulative Scientific-Error of measurements and calculations.
 
 
+
+
 ![ValueAndError_Picture](ValueAndError_Picture.png)
 
 For the all the ways you can benefit from this code, see the example code "ValueAndError_Example".
 
+
+Get it from MATLAB File Exchange here: 
+
+[![View ValueAndError on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/81948-valueanderror)
  ---
 
 ## Creating an Instance of ValueAndError:
