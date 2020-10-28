@@ -461,12 +461,11 @@ function progressPirnt(x,y,numX,numY)
     lengthOfNumbers = strlength(string(totalProgress));
     lengthStr       = string(lengthOfNumbers);
    
-    if isempty(nbytes)
-        disp(" ");
-    else
+    
+    if ~isempty(nbytes)
         fprintf( repmat('\b',1,nbytes) )
     end
-    formattingStr = "ValueAndError: Computation %"+lengthStr+"d of %"+lengthStr+"d ";
+    formattingStr = "ValueAndError is Coputi %"+lengthStr+"d of %"+lengthStr+"d";
     nbytes = fprintf(formattingStr, currentProgress,totalProgress);    
     
     if totalProgress==currentProgress
