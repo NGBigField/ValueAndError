@@ -243,6 +243,8 @@ classdef ValueAndError
            % Prepare Valued errors to use for the overall error :  
            ValuedErrors           = zeros(LengthLongestGivenInput, NumSymbolicInputVariables);
            
+           % show progress:
+           progressPirnt([],[],[],[])
            
            % Itterate over all symbolic inputs to compute derivatives:
              for j = 1:NumSymbolicInputVariables
@@ -451,9 +453,14 @@ function vec = assertColVec(vec)
     
 end
 
-function progressPirnt(x,y,numX,numY)
+function progressPirnt(x,y,numX,numY )
 
     persistent nbytes
+    
+    if isempty(x) && isempty(y) && isempty(numX) && isempty
+        nbytes = [];
+        return
+    end
 
     totalProgress   = numX*numY;
     currentProgress = (x-1)*numY + y;
@@ -461,11 +468,12 @@ function progressPirnt(x,y,numX,numY)
     lengthOfNumbers = strlength(string(totalProgress));
     lengthStr       = string(lengthOfNumbers);
    
-    
-    if ~isempty(nbytes)
+    if isempty(nbytes)
+        disp(" ");
+    else
         fprintf( repmat('\b',1,nbytes) )
     end
-    formattingStr = "ValueAndError is Coputi %"+lengthStr+"d of %"+lengthStr+"d";
+    formattingStr = "ValueAndError: Computation %"+lengthStr+"d of %"+lengthStr+"d ";
     nbytes = fprintf(formattingStr, currentProgress,totalProgress);    
     
     if totalProgress==currentProgress
